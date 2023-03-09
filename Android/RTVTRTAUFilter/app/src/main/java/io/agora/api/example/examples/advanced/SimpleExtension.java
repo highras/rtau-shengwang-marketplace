@@ -171,7 +171,7 @@ public class SimpleExtension extends BaseFragment implements View.OnClickListene
         stoptrans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                engine.setExtensionProperty(EXTENSION_VENDOR_NAME, EXTENSION_AUDIO_FILTER_VOLUME, "stopAudioTranslation", "{}");
+                engine.setExtensionProperty(EXTENSION_VENDOR_NAME, EXTENSION_AUDIO_FILTER_VOLUME, "closeAudioTranslation", "{}");
             }
         });
 
