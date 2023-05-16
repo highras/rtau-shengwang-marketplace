@@ -64,7 +64,8 @@
 初始化声网 `AgoraRtcEngine` 时，调用 `enableExtension` 启用插件。
 
 ```java
-    config.addExtension(iLiveData);
+    RtcEngineConfig config = new RtcEngineConfig();
+    config.addExtension("agora-iLiveData-filter");
     engine = RtcEngine.create(config);
     engine.enableExtension("iLiveData", "RTAU", true);
 ```
@@ -209,5 +210,5 @@
 
 ## 接口说明
 
-插件所有相关接口的参数解释详见（[接口说明]()）。
+插件所有相关接口的参数解释详见（[接口说明](云上曲率实时音视频审核插件接口说明.md)）。
 
