@@ -167,23 +167,19 @@
 
 **iOS**
 
-1. 克隆仓库：
-  ```shell
-	git clone （//TODO: 仓库链接）
-  ```
-2. 从[声网云市场下载](https://docs.agora.io/cn/extension_customer/downloads?platform=All%20Platforms)页面下载实时音视频审核插件的 iOS 插件包。解压后，将所有 `.framwork` 库文件保存到 `（TODO: 具体路径）` 。
-3. 在 Xcode 中打开项目 `（TODO: 工程文件的路径）`。
-4. 打开 `（TODO: 文件的具体路径）`，进行如下修改：
-	- 将 `<YOUR_APP_ID>` 替换为你的 App ID。获取 App ID 请参考[开始使用 Agora 平台](https://docs.agora.io/cn/Agora%20Platform/get_appid_token?platform=All%20Platforms)。
-	- 将 `<YOUR_APP_KEY>` 和 `<YOUR_APP_SECRET>` 分别替换为你的 `appKey` 和 `appSecret`。获取方式详见[购买和激活插件](https://docs.agora.io/cn/extension_customer/get_extension?platform=All%20Platforms)。
+1. 从[声网云市场下载](https://docs.agora.io/cn/extension_customer/downloads?platform=All%20Platforms)页面下载实时音视频审核插件的 iOS 插件包并解压。
+2. 在 Xcode 中打开项目。
+3. 打开 `ViewController`，进行如下修改：
+	- 将 agora_appId 替换为你的 App ID。获取 App ID 请参考[开始使用 Agora 平台](https://docs.agora.io/cn/Agora%20Platform/get_appid_token?platform=All%20Platforms)。
+	- 将 appKey 和 appSecret 分别替换为你的 `appKey` 和 `appSecret`。获取方式详见[购买和激活插件](https://docs.agora.io/cn/extension_customer/get_extension?platform=All%20Platforms)。
 
   ```objective-c
-  // TODO: 替换成你的插件对应的代码
   NSString *const appID = @"<YOUR_APP_ID>";
   NSString *const appkey = @"<YOUR_APP_KEY>";
   NSString *const secret = @"<YOUR_SECRET>";
   ```
-5. 连接一台 iOS 真机（非模拟器），运行项目。
+4. 连接一台 iOS 真机（非模拟器），运行项目。
+
 
 ### 预期效果
 
