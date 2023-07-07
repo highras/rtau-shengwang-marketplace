@@ -231,7 +231,6 @@
 				9432F7FB4360A5D9229AB17E /* Pods-SW_Test.debug.xcconfig */,
 				42110EFD6B776B29FF23BF8D /* Pods-SW_Test.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -618,10 +617,6 @@
 					"-framework",
 					"\"AgoraContentInspectExtension\"",
 					"-framework",
-					"\"AgoraDav1d\"",
-					"-framework",
-					"\"AgoraPvcExtension\"",
-					"-framework",
 					"\"AgoraReplayKitExtension\"",
 					"-framework",
 					"\"AgoraRtcKit\"",
@@ -629,8 +624,6 @@
 					"\"AgoraSoundTouch\"",
 					"-framework",
 					"\"AgoraSpatialAudioExtension\"",
-					"-framework",
-					"\"AgoraSuperResolutionExtension\"",
 					"-framework",
 					"\"AgoraVideoSegmentationExtension\"",
 					"-framework",
@@ -685,10 +678,6 @@
 					"-framework",
 					"\"AgoraContentInspectExtension\"",
 					"-framework",
-					"\"AgoraDav1d\"",
-					"-framework",
-					"\"AgoraPvcExtension\"",
-					"-framework",
 					"\"AgoraReplayKitExtension\"",
 					"-framework",
 					"\"AgoraRtcKit\"",
@@ -696,8 +685,6 @@
 					"\"AgoraSoundTouch\"",
 					"-framework",
 					"\"AgoraSpatialAudioExtension\"",
-					"-framework",
-					"\"AgoraSuperResolutionExtension\"",
 					"-framework",
 					"\"AgoraVideoSegmentationExtension\"",
 					"-framework",
