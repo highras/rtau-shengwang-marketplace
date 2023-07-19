@@ -23,6 +23,8 @@
 
 @property(nonatomic,strong)NSString * appKeyRTAU;
 @property(nonatomic,strong)NSString * appSecretRTAU;
+@property(nonatomic,strong)NSString * callbackUrl;
+
 @end
 
 @implementation ViewController
@@ -30,6 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    
     //翻译识别
     self.appKeyRTVT = @"";
     self.appSecretRTVT = @"";
@@ -38,6 +41,8 @@
     //审核
     self.appKeyRTAU = @"";
     self.appSecretRTAU = @"";
+    self.callbackUrl = @"";//接收审核结果回调地址
+    
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -45,8 +50,8 @@
         
         
         self.agora_appId = @"";
-        self.agora_RoomId = @"888";
-        
+        self.agora_RoomId = @"";
+        self.agora_Token = @"";
         
         
         [self setUpUI];
@@ -100,6 +105,10 @@
 -(void)_startRtvtButtonClick{
     
    
+    
+    
+    
+   
             
         NSDictionary * translateDic = @{@"appKey":self.appKeyRTVT,
                                         @"appSecret":self.appSecretRTVT,
@@ -145,7 +154,7 @@
                                      @"appSecret":self.appSecretRTAU,
                                      @"streamId":[NSString stringWithFormat:@"%lld",ts1],
                                      @"audioLang":@"zh-CN",
-                                     @"callbackUrl" : @"callbackUrl",
+                                     @"callbackUrl" : self.callbackUrl,
                                      
     };
 
