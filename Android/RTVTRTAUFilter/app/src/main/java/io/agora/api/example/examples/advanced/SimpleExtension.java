@@ -15,9 +15,11 @@ import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -78,6 +80,11 @@ public class SimpleExtension extends BaseFragment implements View.OnClickListene
     private int myUid;
     private boolean joined = false;
     private SeekBar record;
+    ListView rtvttestview;
+    ArrayAdapter srcadapter;
+    ArrayList<String> srcarrayList = new ArrayList<>();
+
+
     private Button startaudit, closeAudit, starttrans,stoptrans, stopextension;
 
 
@@ -92,6 +99,16 @@ public class SimpleExtension extends BaseFragment implements View.OnClickListene
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    void addlog(String msg){
+        this.runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                srcarrayList.add(msg);
+                srcadapter.notifyDataSetChanged();
+            }
+        });
     }
 
     SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
@@ -143,6 +160,10 @@ public class SimpleExtension extends BaseFragment implements View.OnClickListene
         record.setEnabled(false);
         local_view = view.findViewById(R.id.fl_local);
         remote_view = view.findViewById(R.id.fl_remote);
+        rtvttestview = view.findViewById(R.id.rtvttest);
+        srcadapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, srcarrayList);
+        rtvttestview.setAdapter(srcadapter);
+
 
         stopextension.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,15 +178,28 @@ public class SimpleExtension extends BaseFragment implements View.OnClickListene
                 JSONObject jsonObject = new JSONObject();
                 try {
 //                    Log.i("sdktest", "java token is " + ApiSecurityExample.genToken(80001000,"qwerty"));
-                    long pid = Long.parseLong(getString(R.string.livedata_pid));
-                    String key = getString(R.string.livedata_key);
+                    String spid  = getString(R.string.livedata_translate_pid);
+                    if (spid.isEmpty()){
+                        showAlert("请配置实时翻译的项目id");
+                        return;
+                    }
+                    long pid = Long.parseLong(spid);
+
+                    String skey  = getString(R.string.livedata_translate_key);
+                    if (skey.isEmpty()){
+                        showAlert("请配置实时翻译的秘钥");
+                        return;
+                    }
+
                     jsonObject.put("srclang", "zh");
                     jsonObject.put("dstLang", "en");
                     jsonObject.put("appKey", pid);
-                    jsonObject.put("appSecret", key);
+                    jsonObject.put("appSecret", skey);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Toast.makeText(getContext(), "开始翻译", Toast.LENGTH_LONG).show();
+
                 engine.setExtensionProperty(EXTENSION_VENDOR_NAME, EXTENSION_AUDIO_FILTER_VOLUME, "startAudioTranslation", jsonObject.toString());
             }
         });
@@ -181,24 +215,35 @@ public class SimpleExtension extends BaseFragment implements View.OnClickListene
         startaudit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "开始审核", Toast.LENGTH_LONG).show();
                 JSONObject jsonObject = new JSONObject();
                 try {
 //                    Log.i("sdktest", "java token is " + ApiSecurityExample.genToken(80001000,"qwerty"));
                     ArrayList<String> attrs = new ArrayList<String>(){{add("1");add("2");}};
-                    jsonObject.put("streamId", "1234567891");
+                    jsonObject.put("streamId", String.valueOf(System.currentTimeMillis()));
                     jsonObject.put("audiocallbackUrl", "");
                     jsonObject.put("videocallbackUrl", "");
                     jsonObject.put("audioLang", "zh-CN");
 
-                    long pid = Long.parseLong(getString(R.string.livedata_pid));
-                    String key = getString(R.string.livedata_key);
+
+                    String spid  = getString(R.string.livedata_audit_pid);
+                    if (spid.isEmpty()){
+                        showAlert("请配置实时审核的项目id");
+                        return;
+                    }
+                    long pid = Long.parseLong(spid);
+
+                    String skey  = getString(R.string.livedata_audit_key);
+                    if (skey.isEmpty()){
+                        showAlert("请配置实时审核的秘钥");
+                        return;
+                    }
 
                     jsonObject.put("appKey", pid);
-                    jsonObject.put("appSecret", key);
+                    jsonObject.put("appSecret", skey);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Toast.makeText(getContext(), "开始审核", Toast.LENGTH_LONG).show();
                 Log.i("sdktest","start json " + jsonObject.toString());
                 int ret = engine.setExtensionProperty(EXTENSION_VENDOR_NAME, EXTENSION_VIDEO_FILTER_WATERMARK, "startAudit", jsonObject.toString());
             }
@@ -248,6 +293,10 @@ public class SimpleExtension extends BaseFragment implements View.OnClickListene
              * The App ID issued to you by Agora. See <a href="https://docs.agora.io/en/Agora%20Platform/token#get-an-app-id"> How to get the App ID</a>
              */
             config.mAppId = getString(R.string.agora_app_id);
+            if (config.mAppId.isEmpty()){
+                showAlert("请配置声网appid");
+                return;
+            }
             /** Sets the channel profile of the Agora RtcEngine.
              CHANNEL_PROFILE_COMMUNICATION(0): (Default) The Communication profile.
              Use this profile in one-on-one calls or group calls, where all users can talk freely.
@@ -559,8 +608,10 @@ public class SimpleExtension extends BaseFragment implements View.OnClickListene
 
     @Override
     public void onEvent(String vendor, String extension, String key, String value) {
-        Log.e(TAG, "onEvent vendor: " + vendor + "  extension: " + extension + "  key: " + key + "  value: " + value);
+        if (vendor.equals("iLiveData"))
+            addlog(value);
     }
+
 
     @Override
     public void onStarted(String s, String s1) {
