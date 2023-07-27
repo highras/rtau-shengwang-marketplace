@@ -1,11 +1,16 @@
 <!--# 使用云上曲率实时音视频审核插件
 本文介绍如何在你的项目中集成和使用云上曲率实时音视频审核插件（以下简称实时音视频审核插件），包括Android和iOS平台。
 -->
-# LiveData RTAU
+# 使用云上曲率实时音视频审核插件
 
+本文介绍如何在你的项目中集成和使用云上曲率实时音视频审核插件（以下简称云上曲率审核插件），包括 Android 和 iOS 平台。
+
+# LiveData RTAU
+### [中文文档](README-zh.md) <br />
 This guide is provided by LiveData. Agora is planning a documentation upgrade program for all extensions on the marketplace. Please stay tuned.
 
 LiveData RTAU extension allows you to embed real-time video moderation into your mobile application providing automated AI recognition of various risky contents from backend,  without any upfront data training requirements.You can find the integration examples below.
+云上曲率审核插件是对云上曲率[实时音频审核](https://docs.ilivedata.com/audiocheck/product/_information/)和[实时视频审核](https://docs.ilivedata.com/videocheck/product/_information/)核心 API 的封装。通过调用[声网视频 SDK v4.0.0](https://docs.agora.io/cn/video-call-4.x-beta/product_video_ng?platform=Android) 的 [setExtensionProperty](https://docs.agora.io/cn/video-call-4.x/API%20Reference/java_ng/API/toc_network.html#api_irtcengine_setextensionproperty) 或 [setExtensionPropertyWithVendor](https://docs.agora.io/cn/video-call-4.x/API%20Reference/ios_ng/API/toc_network.html#api_irtcengine_setextensionproperty)方法，传入指定的 `key` 和 `value` 参数，你可以快速集成云上曲率的实时音视频审核能力。
 
 
 <!--## 技术原理
@@ -351,9 +356,14 @@ When stop using RTAU, call `setExtensionPropertyWithVendor` and pass in the corr
   ```
 5. 连接一台 iOS 真机（非模拟器），运行项目。
 
-### 预期效果
+```objective-c
+// 启用 RTAU 插件
+[_agoraKit enableExtensionWithVendor:[iLiveDataSimpleFilterManager companyName]
+                          extension:[iLiveDataSimpleFilterManager rtau_plugName]
+                            enabled:YES]；
+```
 
-运行成功后，示例项目会安装到你的 Android 或 iOS 设备上。
+### 2. 使用插件
 
 1. 启动 app，你可以在界面上看到 `add room` 和 `Start RTAU` 按钮
 2. 点击 `add room` 进入房间。
