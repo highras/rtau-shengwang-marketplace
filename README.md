@@ -88,9 +88,9 @@
 
 ```java
     JSONObject jsonObject = new JSONObject();
-    jsonObject.put("appKey", "appKey");
-    jsonObject.put("appSecret", "appSecret");
-    jsonObject.put("streamId", "streamId");
+    jsonObject.put("appKey", 123456);
+    jsonObject.put("appSecret", "xxxxxx");
+    jsonObject.put("streamId", "123456");
     jsonObject.put("audioLang", "zh-CN");
     jsonObject.put("callbackUrl", "");
 ```
