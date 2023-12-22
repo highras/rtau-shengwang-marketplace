@@ -33,15 +33,15 @@
     [super viewDidLoad];
 
     
-    //翻译识别
+    //translation
     self.appKeyRTVT = @"";
     self.appSecretRTVT = @"";
     
     
-    //审核
+    //audit
     self.appKeyRTAU = @"";
     self.appSecretRTAU = @"";
-    self.callbackUrl = @"";//接收审核结果回调地址
+    self.callbackUrl = @"";//Callback address for receiving audit results
     
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -105,35 +105,38 @@
 -(void)_startRtvtButtonClick{
     
    
+    NSDictionary * translateDic = @{@"appKey":self.appKeyRTVT,
+                                    @"appSecret":self.appSecretRTVT,
+                                    @"srcLanguage":@"zh",
+                                    @"destLanguage":@"en",
+                                    @"srcAltLanguage":@[],
+                                    
+                                    
+                                    // @"asrResult":@(YES),      Recognition result switch  The default YES is not passed
+                                    // @"transResult":@(YES),    Translation result switch  The default YES is not passed
+                                    // @"asrTempResult":@(NO),  Recognition tmp result switch  The default NO is not passed
+    };
     
     
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:translateDic options:NSJSONWritingPrettyPrinted error:nil];
+    NSString * jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
-   
-            
-        NSDictionary * translateDic = @{@"appKey":self.appKeyRTVT,
-                                        @"appSecret":self.appSecretRTVT,
-                                        @"srcLanguage":@"zh",
-                                        @"destLanguage":@"en"
-                                        
-        };
+    BOOL start_audio_translate_result = [self _setProperty:@"startAudioTranslation" value:jsonStr type:0];
+    
+    
+    if (  start_audio_translate_result == 0 ) {
         
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:translateDic options:NSJSONWritingPrettyPrinted error:nil];
-        NSString * jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        NSLog(@"启动插件成功");
+        [self.startRtvtButton setTitle:@"End RTVT" forState:UIControlStateNormal];
+        [self.startRtvtButton addTarget:self action:@selector(_endRtvtButtonClick) forControlEvents:UIControlEventTouchUpInside];
         
-        BOOL start_audio_translate_result = [self _setProperty:@"startAudioTranslation" value:jsonStr type:0];
+    }else{
+        
+        NSLog(@"启动插件失败");
+        
+    }
         
         
-        if (  start_audio_translate_result == 0 ) {
-            
-            NSLog(@"启动插件成功");
-            [self.startRtvtButton setTitle:@"End RTVT" forState:UIControlStateNormal];
-            [self.startRtvtButton addTarget:self action:@selector(_endRtvtButtonClick) forControlEvents:UIControlEventTouchUpInside];
-            
-        }else{
-            
-            NSLog(@"启动插件失败");
-            
-        }
         
     
     
