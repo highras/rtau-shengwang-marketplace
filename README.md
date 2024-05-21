@@ -65,9 +65,9 @@
 
 ```java
     RtcEngineConfig config = new RtcEngineConfig();
-    config.addExtension("agora-iLiveData-filter");
+    config.addExtension("agora-iLiveData-filter-pre");
     engine = RtcEngine.create(config);
-    engine.enableExtension("iLiveData", "RTAU", true);
+    engine.enableExtension("iLiveDataPre", "RTAU_PRE", true);
 ```
 
 **iOS**
@@ -97,7 +97,7 @@
 
 
 ```java
-    engine.setExtensionProperty("iLiveData", "RTAU", "startAudit", jsonObject.toString());
+    engine.setExtensionProperty("iLiveDataPre", "RTAU_PRE ", "startAudit_pre", jsonObject.toString());
 ```
 
 
@@ -132,7 +132,7 @@
 调用 `setExtensionProperty`方法并指定 key 为 `closeAudit` 来结束实时音视频审核插件的使用。
 
 ```java
-    engine.setExtensionProperty("iLiveData", "RTAU", "closeAudit", "{}");
+    engine.setExtensionProperty("iLiveDataPre", "RTAU_PRE", "closeAudit_pre", "{}");
 ```
 
 **iOS**
