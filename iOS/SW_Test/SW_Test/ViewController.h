@@ -6,7 +6,7 @@
 //
 
 #import <AgoraRtcKit/AgoraRtcKit.h>
-#import <iLiveData_Agora/iLiveData-Agora.h>
+#import <iLiveData_Agora_PRE/iLiveData_Agora_PRE.h>
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 #import "Masonry.h"
