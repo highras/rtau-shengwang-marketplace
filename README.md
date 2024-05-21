@@ -13,7 +13,7 @@
   - 运行 Android 5.0 或以上版本的真机（非模拟器）。
 - iOS 开发环境需满足以下要求：
   - Xcode 9.0 或以上版本。
-  - 运行 iOS 9.0 或以上版本的真机（非模拟器）。
+  - 运行 iOS 11.0 或以上版本的真机（非模拟器）。
 
 ## 准备工作
 
@@ -71,7 +71,7 @@
     RtcEngineConfig config = new RtcEngineConfig();
     config.addExtension("agora-iLiveData-filter-pre");
     engine = RtcEngine.create(config);
-    engine.enableExtension("iLiveData", "RTAU_PRE", true);
+    engine.enableExtension("iLiveDataPre", "RTAU_PRE", true);
 ```
 
 **iOS**
@@ -92,16 +92,16 @@
 
 ```java
     JSONObject jsonObject = new JSONObject();
-    jsonObject.put("appKey", "appKey");
-    jsonObject.put("appSecret", "appSecret");
-    jsonObject.put("streamId", "streamId");
+    jsonObject.put("appKey", 123456);
+    jsonObject.put("appSecret", "xxxxxx");
+    jsonObject.put("streamId", "123456");
     jsonObject.put("audioLang", "zh-CN");
     jsonObject.put("callbackUrl", "");
 ```
 
 
 ```java
-    engine.setExtensionProperty("iLiveData", "RTAU_PRE", "startAudit_pre", jsonObject.toString());
+    engine.setExtensionProperty("iLiveDataPre", "RTAU_PRE ", "startAudit_pre", jsonObject.toString());
 ```
 
 
@@ -136,7 +136,7 @@
 调用 `setExtensionProperty`方法并指定 key 为 `closeAudit_pre` 来结束实时音视频审核插件的使用。
 
 ```java
-    engine.setExtensionProperty("iLiveData", "RTAU_PRE", "closeAudit_pre", "{}");
+    engine.setExtensionProperty("iLiveDataPre", "RTAU_PRE", "closeAudit_pre", "{}");
 ```
 
 **iOS**
