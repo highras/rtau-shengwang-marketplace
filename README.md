@@ -57,6 +57,10 @@
 ## 调用流程
 
 本节介绍插件相关接口的调用流程。接口的参数解释详见[接口说明](云上曲率实时音视频审核插件接口说明.md)。
+注意：
+- 如果要使用音频审核，需要调用`enableExtension`或`enableExtensionWithVendor`时，启用插件`rtvt`和`rtau_pre` ，之后使用`startAudit_pre`进行音频数据的审核。
+- 如果要使用视频（图片）审核，需要调用`enableExtension`或`enableExtensionWithVendor`时，启用插件`rtau_pre` ，之后使用`startAudit_pre`进行视频（图片）数据的审核。
+- 如果要使用音频+视频（图片）审核，需要调用`enableExtension`或`enableExtensionWithVendor`时，启用插件`rtvt`和`rtau_pre` ，之后使用`startAudit_pre`进行音频数据和视频（图片）数据的审核。
 
 ### 1. 启用插件
 
@@ -76,15 +80,15 @@
 
 ```objective-c
    // 启用RTAU插件
-   [_agoraKit enableExtensionWithVendor:[iLiveDataSimpleFilterManager companyName]
-                              extension:[iLiveDataSimpleFilterManager rtau_plugName]
+   [_agoraKit enableExtensionWithVendor:[iLiveDataSimpleFilterManager_pre companyName]
+                              extension:[iLiveDataSimpleFilterManager_pre rtau_pre_plugName]
                                 enabled:YES]；
 ```
 
 ### 2. 使用插件
 
 **Android**
-调用`setExtensionProperty` 指定key 为 `startAudit` 在value中以json格式传入`appkey` `appsecret`等参数。
+调用`setExtensionProperty` 指定key 为 `startAudit_pre` 在value中以json格式传入`appkey` `appsecret`等参数。
 
 ```java
     JSONObject jsonObject = new JSONObject();
@@ -103,7 +107,7 @@
 
 
 **iOS**
-调用`setExtensionPropertyWithVendor`指定 key 为 `startAudit` 在value中以json格式传入`appkey` `appsecret`等参数。
+调用`setExtensionPropertyWithVendor`指定 key 为 `startAudit_pre` 在value中以json格式传入`appkey` `appsecret`等参数。
 
 ```objective-c
      NSDictionary * auditDic = @{
@@ -113,13 +117,13 @@
                                 @"audioLang":@"zh-CN",
                                 @"callbackUrl":@"callbackUrl"
                                };
-                                   
+
      NSData * auditDicJsonData = [NSJSONSerialization dataWithJSONObject:auditDic options:NSJSONWritingPrettyPrinted error:nil];
      NSString * auditDicJsonString = [[NSString alloc] initWithData:auditDicJsonData encoding:NSUTF8StringEncoding];
-     
-     [_agoraKit setExtensionPropertyWithVendor:[iLiveDataSimpleFilterManager companyName]
-                                     extension:[iLiveDataSimpleFilterManager rtau_plugName])
-                                           key:@"startAudit"
+
+     [_agoraKit setExtensionPropertyWithVendor:[iLiveDataSimpleFilterManager_pre companyName]
+                                     extension:[iLiveDataSimpleFilterManager_pre rtau_pre_plugName])
+                                           key:@"startAudit_pre"
                                          value:auditDicJsonString];
 ```
 
@@ -129,19 +133,19 @@
 ### 3. 结束使用插件
 
 **Android**
-调用 `setExtensionProperty`方法并指定 key 为 `closeAudit` 来结束实时音视频审核插件的使用。
+调用 `setExtensionProperty`方法并指定 key 为 `closeAudit_pre` 来结束实时音视频审核插件的使用。
 
 ```java
     engine.setExtensionProperty("iLiveDataPre", "RTAU_PRE", "closeAudit_pre", "{}");
 ```
 
 **iOS**
-调用 `setExtensionPropertyWithVendor`方法并指定 key 为 `closeAudit` 来结束实时音视频审核插件的使用。
+调用 `setExtensionPropertyWithVendor`方法并指定 key 为 `closeAudit_pre` 来结束实时音视频审核插件的使用。
 
 ```objective-c
-    [self.kit setExtensionPropertyWithVendor:[iLiveDataSimpleFilterManager companyName]
-                                   extension:[iLiveDataSimpleFilterManager rtau_plugName]
-                                         key:"closeAudit"
+    [self.kit setExtensionPropertyWithVendor:[iLiveDataSimpleFilterManager_pre companyName]
+                                   extension:[iLiveDataSimpleFilterManager_pre rtau_pre_plugName]
+                                         key:"closeAudit_pre"
                                        value:""];
 ```
 
@@ -193,4 +197,3 @@
 ## 接口说明
 
 插件所有相关接口的参数解释详见（[接口说明](云上曲率实时音视频审核插件接口说明.md)）。
-
