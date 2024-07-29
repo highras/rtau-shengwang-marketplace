@@ -18,8 +18,6 @@
 @property(nonatomic,strong)NSString * agora_Token;
 @property(nonatomic,strong)NSString * agora_RoomId;
 
-@property(nonatomic,strong)NSString * appKeyRTVT;
-@property(nonatomic,strong)NSString * appSecretRTVT;
 
 @property(nonatomic,strong)NSString * appKeyRTAU;
 @property(nonatomic,strong)NSString * appSecretRTAU;
@@ -33,16 +31,10 @@
     [super viewDidLoad];
 
     
-    //translation
-    self.appKeyRTVT = @"";
-    self.appSecretRTVT = @"";
-    
-    
     //audit
     self.appKeyRTAU = @"";
     self.appSecretRTAU = @"";
     self.callbackUrl = @"";//Callback address for receiving audit results
-    
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -51,7 +43,6 @@
         
         self.agora_appId = @"";
         self.agora_RoomId = @"";
-        self.agora_Token = @"";
         
         
         [self setUpUI];
@@ -66,17 +57,15 @@
         self.kit = [AgoraRtcEngineKit sharedEngineWithConfig:self.config delegate:self];
         
         
-        //音频
+        //audio
         NSLog(@"[self.kit setClientRole:AgoraClientRoleBroadcaster]  %d",[self.kit setClientRole:AgoraClientRoleBroadcaster]);
         NSLog(@"[self.kit enableAudio];  %d",[self.kit enableAudio]);
-        NSLog(@"self.kit enableExtensionWithVendor:  %d",[self.kit enableExtensionWithVendor:[iLiveDataSimpleFilterManager companyName] extension:[iLiveDataSimpleFilterManager rtvt_plugName] enabled:YES]);
+        NSLog(@"self.kit enableExtensionWithVendor:  %d",[self.kit enableExtensionWithVendor:[iLiveDataSimpleFilterManager_pre companyName] extension:[iLiveDataSimpleFilterManager_pre rtvt_pre_plugName] enabled:YES]);
         NSLog(@"[self.kit setAudioProfile:AgoraAudioProfileDefault]  %d",[self.kit setAudioProfile:AgoraAudioProfileDefault]);
         NSLog(@"[self.kit setDefaultAudioRouteToSpeakerphone:YES];   %d",[self.kit setDefaultAudioRouteToSpeakerphone:YES]);
         
         
-        //视频
-        
-
+        //video
         AgoraVideoEncoderConfiguration * videoEncoderConfiguration = [[AgoraVideoEncoderConfiguration alloc] initWithSize:CGSizeMake(120, 160)
                                                                                                                 frameRate:AgoraVideoFrameRateFps15
                                                                                                                   bitrate:AgoraVideoBitrateStandard
@@ -84,8 +73,8 @@
                                                                                                                mirrorMode:AgoraVideoMirrorModeAuto];
         [self.kit setVideoEncoderConfiguration:videoEncoderConfiguration];
         NSLog(@"[self.kit enableVideo];  %d",[self.kit enableVideo]);
-        NSLog(@"self.kit enableExtensionWithVendor:  %d",[self.kit enableExtensionWithVendor:[iLiveDataSimpleFilterManager companyName] extension:[iLiveDataSimpleFilterManager rtau_plugName] enabled:YES]);
-
+        NSLog(@"self.kit enableExtensionWithVendor:  %d",[self.kit enableExtensionWithVendor:[iLiveDataSimpleFilterManager_pre companyName] extension:[iLiveDataSimpleFilterManager_pre rtau_pre_plugName] enabled:YES]);
+        
         AgoraRtcVideoCanvas * videoCanvas = [[AgoraRtcVideoCanvas alloc] init];
         videoCanvas.uid = 0;
         // the view to be binded
@@ -99,55 +88,6 @@
         [self.kit startPreview];
         
     });
-    
-}
-//进入房间 开启rtvt
--(void)_startRtvtButtonClick{
-    
-   
-    NSDictionary * translateDic = @{@"appKey":self.appKeyRTVT,
-                                    @"appSecret":self.appSecretRTVT,
-                                    @"srcLanguage":@"zh",
-                                    @"destLanguage":@"en",
-                                    @"srcAltLanguage":@[],
-                                    
-                                    
-                                    // @"asrResult":@(YES),      Recognition result switch  The default YES is not passed
-                                    // @"transResult":@(YES),    Translation result switch  The default YES is not passed
-                                    // @"asrTempResult":@(NO),  Recognition tmp result switch  The default NO is not passed
-    };
-    
-    
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:translateDic options:NSJSONWritingPrettyPrinted error:nil];
-    NSString * jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
-    BOOL start_audio_translate_result = [self _setProperty:@"startAudioTranslation" value:jsonStr type:0];
-    
-    
-    if (  start_audio_translate_result == 0 ) {
-        
-        NSLog(@"启动插件成功");
-        [self.startRtvtButton setTitle:@"End RTVT" forState:UIControlStateNormal];
-        [self.startRtvtButton addTarget:self action:@selector(_endRtvtButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        
-    }else{
-        
-        NSLog(@"启动插件失败");
-        
-    }
-        
-        
-        
-    
-    
-}
--(void)_endRtvtButtonClick{
-    
-    BOOL end_audio_translate_result = [self _setProperty:@"closeAudioTranslation" value:@"end" type:0];
-    if (end_audio_translate_result == 0) {
-        [self.startRtvtButton setTitle:@"Start RTVT" forState:UIControlStateNormal];
-        [self.startRtvtButton addTarget:self action:@selector(_startRtvtButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    }
     
 }
 -(void)_startRtauButtonClick{
@@ -166,24 +106,24 @@
     NSString * jsonStr2 = [[NSString alloc] initWithData:jsonData2 encoding:NSUTF8StringEncoding];
     
     
-    BOOL start_check_result = [self _setProperty:@"startAudit" value:jsonStr2 type:1];
+    BOOL start_check_result = [self _setProperty:@"startAudit_pre" value:jsonStr2 type:1];
     
     
     if (  start_check_result == 0 ) {
         
-        NSLog(@"启动插件成功");
+        NSLog(@"start success");
         [self.startRtauButton setTitle:@"End RTAU" forState:UIControlStateNormal];
         [self.startRtauButton addTarget:self action:@selector(_endRtauButtonClick) forControlEvents:UIControlEventTouchUpInside];
         
     }else{
         
-        NSLog(@"启动插件失败");
+        NSLog(@"start fail");
         
     }
 }
 -(void)_endRtauButtonClick{
     
-    BOOL end_check_result = [self _setProperty:@"closeAudit" value:@"end" type:1];
+    BOOL end_check_result = [self _setProperty:@"closeAudit_pre" value:@"end" type:1];
     if (end_check_result == 0) {
         [self.startRtauButton setTitle:@"Start RTAU" forState:UIControlStateNormal];
         [self.startRtauButton addTarget:self action:@selector(_startRtauButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -207,8 +147,8 @@
 //0 rtvt 1rtau
 -(BOOL)_setProperty:(NSString*)key value:(NSString*)value type:(int)type{
     
-    return [self.kit setExtensionPropertyWithVendor:[iLiveDataSimpleFilterManager companyName]
-                                          extension:(type == 0 ? [iLiveDataSimpleFilterManager rtvt_plugName] : [iLiveDataSimpleFilterManager rtau_plugName])
+    return [self.kit setExtensionPropertyWithVendor:[iLiveDataSimpleFilterManager_pre companyName]
+                                          extension:[iLiveDataSimpleFilterManager_pre rtau_pre_plugName]
                                                 key:key
                                               value:value];
     
@@ -218,51 +158,9 @@
     
     NSLog(@"onEvent  %@   %@  %@   %@",provider,extension,key,value);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        
-        //NSDictionary * dic = @{@"startTs":@(startTs),@"endTs":@(endTs),@"result":result,@"recTs":@(recTs)};
-        NSError * error;
-        NSData *jsonData = [value dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                            options:NSJSONReadingMutableContainers error:&error];
-        if(error == nil){
-            
-    //        [[dic objectForKey:@"startTs"] longLongValue];
-    //        [[dic objectForKey:@"endTs"] longLongValue];
-    //        [dic objectForKey:@"result"];//nsstring
-    //        [[dic objectForKey:@"recTs"] longLongValue];
-
-        }
-        
-        if ([key isEqualToString:@"recognizeResult"]) {
-            
-            [self.recognizedResultArray addObject:value];
-            [self.recognizedTableView reloadData];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.recognizedResultArray.count - 1 inSection:0];
-            [self.recognizedTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-            
-            
-        }else if ([key isEqualToString:@"translateResult"]){
-            
-            [self.translatedResultArray addObject:value];
-            [self.translatedTableView reloadData];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.translatedResultArray.count - 1 inSection:0];
-            [self.translatedTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-            
-        }
-        
-    });
     
     
 }
-
-
-
-
-
-
-
 
 
 
@@ -270,17 +168,7 @@
 
 
 #pragma mark ui
--(UIButton*)startRtvtButton{
-    if (_startRtvtButton == nil) {
-        _startRtvtButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _startRtvtButton.titleLabel.font = [UIFont systemFontOfSize:13];
-        [_startRtvtButton setTitle:@"Start RTVT" forState:UIControlStateNormal];
-        [_startRtvtButton addTarget:self action:@selector(_startRtvtButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        _startRtvtButton.backgroundColor = YS_Color_alpha(0x1b9fff,1);
-        [_startRtvtButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    }
-    return _startRtvtButton;
-}
+
 -(UIButton*)startRtauButton{
     if (_startRtauButton == nil) {
         _startRtauButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -304,24 +192,4 @@
     return _addRoomButton;
 }
 
--(UITableView*)translatedTableView{
-    if (_translatedTableView == nil) {
-        _translatedTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        _translatedTableView.backgroundColor = [UIColor blackColor];
-        _translatedTableView.delegate = self;
-        _translatedTableView.dataSource = self;
-        _translatedTableView.rowHeight = UITableViewAutomaticDimension;
-    }
-    return _translatedTableView;
-}
--(UITableView*)recognizedTableView{
-    if (_recognizedTableView == nil) {
-        _recognizedTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        _recognizedTableView.backgroundColor = [UIColor blackColor];
-        _recognizedTableView.delegate = self;
-        _recognizedTableView.dataSource = self;
-        _recognizedTableView.rowHeight = UITableViewAutomaticDimension;
-    }
-    return _recognizedTableView;
-}
 @end
