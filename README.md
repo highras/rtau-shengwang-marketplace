@@ -61,7 +61,9 @@
 ### 1. 启用插件
 
 **Android**
-初始化声网 `AgoraRtcEngine` 时，调用 `enableExtension` 启用插件。
+初始化声网 `AgoraRtcEngine` 时，调用 `enableExtension` 启用插件。<br>
+<font color=gray>
+    tips:如果so库确定存在 调用addExtension返回-3 请尝试使用系统System.loadLibrary加载动态库</font>
 
 ```java
     RtcEngineConfig config = new RtcEngineConfig();
