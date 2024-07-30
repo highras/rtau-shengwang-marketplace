@@ -1,30 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    <string name="agora_app_id" translatable="false"></string>
+    <string name="agora_app_id" translatable="false"></string>
     <string name="agora_access_token" translatable="false"></string>
-    <string name="livedata_translate_pid" translatable="false"></string>
-    <string name="livedata_translate_key" translatable="false"></string>
-    <string name="livedata_translate_srclang" translatable="false"></string>
-    <string name="livedata_translate_dstlang" translatable="false"></string>
-
     <string name="livedata_audit_pid" translatable="false"></string>
     <string name="livedata_audit_key" translatable="false"></string>
     <string name="livedata_callbackUrl" translatable="false"></string>
-    <string name="livedata_audit_lang" translatable="false"></string>-->
-
-    <string name="agora_app_id" translatable="false">a0152df407e24d82ad25db39489dd835</string>
-    <string name="agora_access_token" translatable="false"></string>
-    <string name="livedata_translate_pid" translatable="false">81700001</string>
-    <string name="livedata_translate_key" translatable="false">enhjdmI=</string>
-    <string name="livedata_translate_srclang" translatable="false">zh</string>
-    <string name="livedata_translate_dstlang" translatable="false">en</string>
-
-    <!--    <string name="livedata_audit_pid" translatable="false">92000002</string>-->
-    <!--    <string name="livedata_audit_key" translatable="false">NUQ4Mjg4RDMtQzVFMi1BNzczLTcxRDgtQ0Y1NTQ4NEE2NjA1</string>-->
-
-    <string name="livedata_audit_pid" translatable="false">92000001</string>
-    <string name="livedata_audit_key" translatable="false">cXdlcnR5</string>
-    <!--    <string name="livedata_audit_lang" translatable="false">en-US</string>-->
-    <string name="livedata_audit_lang" translatable="false">zh-CN</string>
-    <string name="livedata_callbackUrl" translatable="false">127.0.0.1</string>
+    <string name="livedata_audit_lang" translatable="false"></string>
 </resources>

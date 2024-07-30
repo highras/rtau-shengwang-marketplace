@@ -68,13 +68,9 @@ public class SimpleExtension extends AppCompatActivity implements View.OnClickLi
 
     String agora_app_id;
     String agora_access_token;
-    long livedata_translate_pid;
-    String livedata_translate_key;
     long livedata_audit_pid;
     String livedata_audit_key;
     String livedata_callbackUrl;
-    String livedata_translate_srclang;
-    String livedata_translate_dstlang;
     String livedata_audit_lang;
 
 
@@ -107,12 +103,6 @@ public class SimpleExtension extends AppCompatActivity implements View.OnClickLi
 
         agora_app_id = getString(R.string.agora_app_id);
         agora_access_token = getString(R.string.agora_access_token);
-        String slivedata_translate_pid = getString(R.string.livedata_translate_pid);
-        if (slivedata_translate_pid.isEmpty())
-            livedata_translate_pid = 0;
-        else
-            livedata_translate_pid = Long.parseLong(slivedata_translate_pid);
-        livedata_translate_key = getString(R.string.livedata_translate_key);
 
         String slivedata_audit_pid = getString(R.string.livedata_audit_pid);
         if (slivedata_audit_pid.isEmpty())
@@ -121,9 +111,6 @@ public class SimpleExtension extends AppCompatActivity implements View.OnClickLi
             livedata_audit_pid = Long.parseLong(slivedata_audit_pid);
         livedata_audit_key = getString(R.string.livedata_audit_key);
         livedata_callbackUrl = getString(R.string.livedata_callbackUrl);
-
-        livedata_translate_srclang = getString(R.string.livedata_translate_srclang);
-        livedata_translate_dstlang = getString(R.string.livedata_translate_dstlang);
         livedata_audit_lang = getString(R.string.livedata_audit_lang);
 
         try {
